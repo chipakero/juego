@@ -49,15 +49,25 @@ public class NewPanel extends JPanel implements ActionListener {
         for (int i = 0 + f; i > -500 - z; i -= 480) {
             g.drawImage(Fondo, 0, i, null);
         }
-        g.drawImage(Derecha, (x + 300), (z + 200 + y), (c + x + 300 + 63), (z + y + 200 + 63), caminar * 63, 0, caminar * 63 + 63, 63, this);
-
         g.drawImage(Plataforma, (310), (w + 240), (310 + 45), (w + 240 + 45), plataforma * 45, 0, plataforma * 45 + 45, 45, this);
+        g.drawImage(Derecha, (x + 300), (z + 200 + y), (c + x + 300 + 63), (z + y + 200 + 63), caminar * 63, 0, caminar * 63 + 63, 63, this);
+        
+       
+        for(int i=200+f;i>-500-z;i-=250){
+            
+            for(int j=0;j<650;j+=(int)(Math.random()*600)){
+            g.drawImage(Plataforma, (j), (w + i), (j + 45), (w + i + 45), plataforma * 45, 0, plataforma * 45 + 45, 45, this);
+            }
+        }
+       
+
+        
 
     }
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle((x + 300), (z + 200 + y), (63), (63));
+        return new Rectangle((x + 300), (z + 260 + y), (63), (3));
     }
 
     public void Saltos() {
