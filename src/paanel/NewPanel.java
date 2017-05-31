@@ -53,12 +53,14 @@ public class NewPanel extends JPanel implements ActionListener {
         g.drawImage(Derecha, (x + 300), (z + 200 + y), (c + x + 300 + 63), (z + y + 200 + 63), caminar * 63, 0, caminar * 63 + 63, 63, this);
         
        
-        for(int i=200+f;i>-500-z;i-=250){
+        for(int i=200+f;i>-500-z;i-=150){
+            int random=(int)(Math.random()*600);
+            Rectangle p= new Rectangle((random), (w + i+20), (45), (5));
+            g.drawRect((random), (w + i+20), (45), (5));
+            g.drawImage(Plataforma, (random), (w + i), (random + 45), (w + i + 45), plataforma * 45, 0, plataforma * 45 + 45, 45, this);
             
-            for(int j=0;j<650;j+=(int)(Math.random()*600)){
-            g.drawImage(Plataforma, (j), (w + i), (j + 45), (w + i + 45), plataforma * 45, 0, plataforma * 45 + 45, 45, this);
-            }
         }
+        g.drawRect((x + 300), (z + 260 + y), (c+63), (3));
        
 
         
@@ -67,23 +69,34 @@ public class NewPanel extends JPanel implements ActionListener {
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle((x + 300), (z + 260 + y), (63), (3));
+        return new Rectangle((x + 300), (z + 260 + y), (c+63), (3));
+        
     }
 
     public void Saltos() {
-
-        Rectangle Reset1 = new Rectangle((310), (w + 240), 45, 5);
-        if (Reset1.intersects(getBounds())) {
+            for(int i=200+f;i>-500-z;i-=150){
+            int random=(int)(Math.random()*600);
+            Rectangle p= new Rectangle((random), (w + i+20), (45), (5));  
+           Rectangle Reset1 = new Rectangle((310), (w + 240), 45, 5);
+            if (Reset1.intersects(getBounds())) {
             salto = 0;
             z += 1;
-        } else {
+        }else if(getBounds().intersects(p)) {
+            salto = 0;
+            z += 1;
+            
+                 }else{
             score += 1;
+            }
         }
+           
+       
+        
 
     }
 
     public void GameOver() {
-        Rectangle gameover = new Rectangle(0, 475, 640, 3);
+        Rectangle gameover = new Rectangle(0, 475, 640, 100);
         Rectangle ninja = getBounds();
 
         if ((ninja.intersects(gameover))) {
@@ -91,21 +104,23 @@ public class NewPanel extends JPanel implements ActionListener {
             System.out.println("Game Over");
             time.stop();
             this.Jugador.setScore(score);
+            this.sonido.stop();
         }
 
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (caminar == 9) {
-            caminar = 0;
-        } else {
-            caminar++;
-        }
+       
         if (plataforma == 13) {
             plataforma = 0;
         } else {
             plataforma++;
+        }
+        if (caminar == 9) {
+                  caminar = 0;
+                  } else{
+               caminar++;
         }
         w += 1;
         f += 3;
@@ -138,7 +153,8 @@ public class NewPanel extends JPanel implements ActionListener {
                 time.stop();
             }
             if (key == KeyEvent.VK_RIGHT) {
-                x += 20;
+                 
+                  x += 20;
                 c = 0;
             } else if (key == KeyEvent.VK_LEFT) {
                 x -= 20;
